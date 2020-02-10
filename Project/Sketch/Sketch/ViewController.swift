@@ -8,11 +8,18 @@
 
 import UIKit
 
+var lineColor = UIColor.red.cgColor
+
 class ViewController: UIViewController {
     
     var lastPoint : CGPoint!
     var lineSize : CGFloat = 2.0
-    var lineColor = UIColor.red.cgColor
+    
+    var backupImage : UIImage? = nil
+    var currentImage : UIImage? = nil
+    var tempImage : UIImage? = nil
+    
+    
 
     @IBOutlet weak var imgView: UIImageView!
     
@@ -25,10 +32,21 @@ class ViewController: UIViewController {
         imgView.image = nil
     }
     
+    @IBAction func btnUndoOrRedo(_ sender: UIButton) {
+        
+        imgView.image = backupImage
+        
+        tempImage = currentImage
+        currentImage = backupImage
+        backupImage = tempImage
+        
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first! as UITouch
         
         lastPoint = touch.location(in: imgView)
+        backupImage = currentImage
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -65,6 +83,7 @@ class ViewController: UIViewController {
         UIGraphicsGetCurrentContext()?.strokePath()
         
         imgView.image = UIGraphicsGetImageFromCurrentImageContext()
+        currentImage = imgView.image
         UIGraphicsEndImageContext()
     }
     

@@ -40,7 +40,7 @@ class ViewController: UIViewController, EditDelegate {
         txMessage.text = message
     }
     
-    func didImageOnOffDoen(_ controller: EditViewController, isOn: Bool) {
+    func didImageOnOffDone(_ controller: EditViewController, isOn: Bool) {
         if isOn {
             imgView.image = img1
             self.isOn = true
